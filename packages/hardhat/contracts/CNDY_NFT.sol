@@ -8,31 +8,73 @@ pragma solidity ^0.8.18;
 
 import {ERC721URIStorage, ERC721} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import "./CrushToken.sol";
 
-contract CNDY_NFT is ERC721URIStorage, ReentrancyGuard {
-    using Strings for uint256;
+contract CNDY_NFT is ERC721URIStorage, ReentrancyGuard, Ownable {
+    uint256 public tokenCounter;
+    CrushToken public crushToken;
 
-    /// @dev Counter to track the number of NFTs minted and to ensure each NFT has a unique ID.
-    uint256 private _currentTokenId = 1;
+    mapping(uint256 => string) private _tokenCIDs;
 
     /// @notice Initializes the contract by setting the NFT name and ticker.
-    constructor() ERC721("CryptoCandy", "CNDY") {}
+    // q why set CrushToken addy here?
+    constructor(address _crushTokenAddress) ERC721("CNDY NFT", "CNDY") {
+        tokenCounter = 0;
+        crushToken = CrushToken(_crushTokenAddress);
 
-    /// @notice Mints a new NFT to the msg.sender with a unique token ID.
-    /// @dev The _safeMint function checks that the recipient address can receive ERC721 tokens.
-    /// @dev The _setTokenURI is called to associate metadata with the newly minted token.
-    function mintCNDY() public nonReentrant {
-        _safeMint(msg.sender, _currentTokenId);
-        _setTokenURI(_currentTokenId, generateTokenURI(_currentTokenId));
-        _currentTokenId++;
+        _tokenCIDs[0] = "QmbDUmCgoF6nMZq1tVzTP5trsmg6MUHRaLYY3Gqz9wpw6J"; // VITALIK_CID
+        _tokenCIDs[1] = "QmRNMyp2FiHGPT6funHBYYqXdLufARKKXrfqWHxhEiLidS"; // COBIE_CID
+        _tokenCIDs[2] = "QmZM4hc6nSYVKNgjfm1jxhZtF4CvcqTcWDXWP17C8DPneP"; // CZ_CID
+        _tokenCIDs[3] = "QmcokV9AfW2rxNMuhjd2Agzpr4himUtET4W9FF2QxqYonY"; // MILADY_CID
     }
 
-    /// @notice Generates a token URI for the given token ID.
-    /// @param tokenId The ID of the token to generate the URI for.
-    /// @return The generated token URI.
-    function generateTokenURI(uint256 tokenId) private view returns (string memory) {
+    /// @notice Mints a new NFT to the msg.sender with a unique token ID after burning CRUSH tokens.
+    /// @dev The _safeMint function checks that the recipient address can receive ERC721 tokens.
+    /// @dev The _setTokenURI is called to associate metadata with the newly minted token.
+    // q is the math here 'safe'?
+    function mintCNDY(uint256 tokenId) public nonReentrant {
+        require(tokenId < 4, "Invalid token ID");
+        uint256 crushBalance = crushToken.balanceOf(msg.sender); // Get the CRUSH balance of msg.sender
+        uint256 crushToBurn = crushBalance / 10; // Calculate 10% of the CRUSH holdings
+
+        crushToken.burnForCNDY(crushToBurn); // Call the burn function in CRUSH contract
+
+        _safeMint(msg.sender, tokenId);
+        _setTokenURI(tokenId, generateTokenURI(tokenId));
+        tokenCounter++;
+    }
+
+// missing functions set and getCNDYMultiplier
+
+    function generateTokenURI(uint256 tokenId) internal view returns (string memory) {
         // This function should return a valid URI pointing to the metadata of the NFT
-        return string(abi.encodePacked("https://api.mysite.com/metadata/", Strings.toString(tokenId)));
+        return string(abi.encodePacked("ipfs://", _tokenCIDs[tokenId]));
+    }
+
+    function setBaseURI(uint256 tokenId, string memory cid) public onlyOwner {
+        _tokenCIDs[tokenId] = cid;
+    }
+
+    function uint2str(uint256 _i) internal pure returns (string memory) {
+        if (_i == 0) {
+            return "0";
+        }
+        uint256 j = _i;
+        uint256 length;
+        while (j != 0) {
+            length++;
+            j /= 10;
+        }
+        bytes memory bstr = new bytes(length);
+        uint256 k = length;
+        while (_i != 0) { 
+            k = k - 1;
+            uint8 temp = (48 + uint8(_i - _i / 10 * 10));
+            bytes1 b1 = bytes1(temp);
+            bstr[k] = b1;
+            _i /= 10;
+        }
+        return string(bstr);
     }
 }

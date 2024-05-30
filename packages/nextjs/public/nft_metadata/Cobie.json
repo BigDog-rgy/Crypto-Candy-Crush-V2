@@ -1,0 +1,19 @@
+{
+    "name": "Cobie",
+    "description": "Market Maker - Automatically arranges five pieces into a line for a combo.",
+    "image": "ipfs://QmeHjyBuPc2G7fBvtqcFY8tsQ6mgE91y1Ns6urxes5M5X6",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Epic"
+      },
+      {
+        "trait_type": "Effect",
+        "value": "Market Maker"
+      },
+      {
+        "trait_type": "CNDYMultiplier", 
+        "value": 2.5
+      }
+    ]
+  }

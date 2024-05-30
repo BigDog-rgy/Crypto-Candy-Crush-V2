@@ -1,0 +1,19 @@
+{
+    "name": "Vitalik's Schlong",
+    "description": "Fork - Splits all pieces into two for double the matches.",
+    "image": "ipfs://QmWubiiTRDLLf6q3Cbc1DWHEFxYEyACjooyqLyrPWVnYhs",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Legendary"
+      },
+      {
+        "trait_type": "Effect",
+        "value": "Fork"
+      },
+      {
+        "trait_type": "CNDYMultiplier", 
+        "value": 3
+      }
+    ]
+  }

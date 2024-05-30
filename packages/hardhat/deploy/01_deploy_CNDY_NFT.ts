@@ -1,6 +1,6 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import { Contract } from "ethers";
+// import { Contract } from "ethers";
 
 /**
  * Deploys the CNDY_NFT contract using the deployer account.
@@ -9,19 +9,21 @@ import { Contract } from "ethers";
  */
 const deployCNDYNFT: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
-  const { deploy } = hre.deployments;
+  const { deployments } = hre;
+  const { deploy, get } = deployments;
+
+  // Get the deployed CrushToken contract
+  const crushTokenDeployment = await get("CrushToken");
 
   // Deploy the CNDY_NFT contract
-  await deploy("CNDY_NFT", {
+  const cndyNftDeployment = await deploy("CNDY_NFT", {
     from: deployer,
-    args: [], // No constructor arguments for CNDY_NFT
+    args: [crushTokenDeployment.address], // Pass CrushToken address as constructor argument
     log: true,
     autoMine: true, // Faster deployment on local networks
   });
 
-  // Get the deployed contract to interact with it after deploying
-  const cndyNft = await hre.ethers.getContract<Contract>("CNDY_NFT", deployer);
-  console.log("CNDY_NFT deployed to:", cndyNft.address);
+  console.log("CNDY_NFT deployed to:", cndyNftDeployment.address);
 };
 
 export default deployCNDYNFT;

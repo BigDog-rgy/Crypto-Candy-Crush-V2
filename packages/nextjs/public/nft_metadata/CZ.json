@@ -1,0 +1,19 @@
+{
+    "name": "CZ",
+    "description": "Flash Crash – Clears random pieces from the board.",
+    "image": "ipfs://QmYs1boGizK6BnSj2AVALZiyDCy1RP8YJrdhPDYjRGWkDN",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Rare"
+      },
+      {
+        "trait_type": "Effect",
+        "value": "Flash Crash"
+      },
+      {
+        "trait_type": "CNDYMultiplier", 
+        "value": 2
+      }
+    ]
+  }
