@@ -5,9 +5,9 @@
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 const deployedContracts = {
-  1337: {
+  31337: {
     CNDY_NFT: {
-      address: "0x71C95911E9a5D330f4D621842EC243EE1343292e",
+      address: "0x6431AF84d34F0522cAA58b221d94A150B5AdAC69",
       abi: [
         {
           inputs: [
@@ -511,7 +511,7 @@ const deployedContracts = {
       },
     },
     CrushToken: {
-      address: "0x8464135c8F25Da09e49BC8782676a84730C318bC",
+      address: "0xeA8AE08513f8230cAA8d031D28cB4Ac8CE720c68",
       abi: [
         {
           inputs: [],
@@ -996,7 +996,7 @@ const deployedContracts = {
       },
     },
     Raffle: {
-      address: "0x948B3c65b89DF0B4894ABE91E6D02FE579834F8F",
+      address: "0x18b7CBdfFA52d1e7BB992fd50f394c5b59E20B72",
       abi: [
         {
           inputs: [

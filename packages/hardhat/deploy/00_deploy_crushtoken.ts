@@ -7,16 +7,17 @@ import { DeployFunction } from "hardhat-deploy/types";
  * @param hre HardhatRuntimeEnvironment object.
  */
 const deployCrushToken: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployer } = await hre.getNamedAccounts();
-  const { deployments } = hre;
+  const { deployments, getNamedAccounts } = hre;
   const { deploy } = deployments;
 
+  const { deployer } = await getNamedAccounts();
+  console.log("Deployer account:", deployer);
   // Deploy the CrushToken contract
   const crushTokenDeployment = await deploy("CrushToken", {
     from: deployer,
     args: [], // No constructor arguments for CrushToken
     log: true,
-    autoMine: false, // Faster deployment on local networks
+    autoMine: true,
   });
 
   //const deployerSigner = await ethers.getSigner(deployer);
@@ -24,12 +25,6 @@ const deployCrushToken: DeployFunction = async function (hre: HardhatRuntimeEnvi
   // Get the deployed contract to interact with it after deploying
   //const crushToken = await ethers.getContractAt("CrushToken", crushTokenDeployment.address, deployerSigner);
   console.log("CrushToken deployed to:", crushTokenDeployment.address);
-
-  // Interact with the deployed contract
-  const crushToken = await ethers.getContractAt("CrushToken", crushTokenDeployment.address);
-  const tx = await crushToken.setPlayerScore(deployer, 100);
-  await tx.wait();
-  console.log("Player score set successfully");
 };
 
 export default deployCrushToken;

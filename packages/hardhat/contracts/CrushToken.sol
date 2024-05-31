@@ -25,6 +25,10 @@ contract CrushToken is ERC20, Ownable {
         transferOwnership(msg.sender);
     }
 
+    function setCNDYContract(address _cndyContractAddress) external onlyOwner {
+        cndyContractAddress = _cndyContractAddress;
+    }
+
     // Override the transfer functions to prevent transfers
     function transfer(address, uint256) public override returns (bool) {
         revert TransferNotAllowed("transfer not allowed");
