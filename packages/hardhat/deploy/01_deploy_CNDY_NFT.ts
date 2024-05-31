@@ -20,7 +20,7 @@ const deployCNDYNFT: DeployFunction = async function (hre: HardhatRuntimeEnviron
     from: deployer,
     args: [crushTokenDeployment.address], // Pass CrushToken address as constructor argument
     log: true,
-    autoMine: true, // Faster deployment on local networks
+    autoMine: false, // Faster deployment on local networks
   });
 
   console.log("CNDY_NFT deployed to:", cndyNftDeployment.address);

@@ -20,7 +20,7 @@ const deployRaffle: DeployFunction = async function (hre: HardhatRuntimeEnvironm
     from: deployer,
     args: [crushTokenDeployment.address], // Pass CrushToken address as constructor argument
     log: true,
-    autoMine: true, // Faster deployment on local networks
+    autoMine: false, // Faster deployment on local networks
   });
 
   console.log("Raffle deployed to:", raffleDeployment.address);

@@ -2,6 +2,7 @@
 pragma solidity ^0.8.18;
 
 import "./CrushToken.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 /*
 Setting Raffle Duration
@@ -25,7 +26,7 @@ Contract interactions:
     Listens
 */
 
-contract Raffle {
+contract Raffle is Ownable{
     CrushToken private _crushContract;
 
     // leaderboard for top 50 scores per raffle
@@ -39,6 +40,7 @@ contract Raffle {
 
     constructor(address crushContractAddress) {
         _crushContract = CrushToken(crushContractAddress);
+        transferOwnership(msg.sender);
     }
 
     // q should player score go to Raffle or CRUSH

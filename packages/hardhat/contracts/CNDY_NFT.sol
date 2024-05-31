@@ -22,6 +22,7 @@ contract CNDY_NFT is ERC721URIStorage, ReentrancyGuard, Ownable {
     constructor(address _crushTokenAddress) ERC721("CNDY NFT", "CNDY") {
         tokenCounter = 0;
         crushToken = CrushToken(_crushTokenAddress);
+        transferOwnership(msg.sender);
 
         _tokenCIDs[0] = "QmbDUmCgoF6nMZq1tVzTP5trsmg6MUHRaLYY3Gqz9wpw6J"; // VITALIK_CID
         _tokenCIDs[1] = "QmRNMyp2FiHGPT6funHBYYqXdLufARKKXrfqWHxhEiLidS"; // COBIE_CID

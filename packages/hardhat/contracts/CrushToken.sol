@@ -10,7 +10,7 @@ pragma solidity ^0.8.18;
 import "./Raffle.sol";
 import "./CNDY_NFT.sol";
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract CrushToken is ERC20, Ownable {
 
@@ -21,7 +21,9 @@ contract CrushToken is ERC20, Ownable {
     mapping(address => uint256) private _balances;
     uint256 private _totalSupply;
 
-    constructor() ERC20("Crush", "CRUSH") {}
+    constructor() ERC20("Crush", "CRUSH") {
+        transferOwnership(msg.sender);
+    }
 
     // Override the transfer functions to prevent transfers
     function transfer(address, uint256) public override returns (bool) {

@@ -16,7 +16,7 @@ const deployCrushToken: DeployFunction = async function (hre: HardhatRuntimeEnvi
     from: deployer,
     args: [], // No constructor arguments for CrushToken
     log: true,
-    autoMine: true, // Faster deployment on local networks
+    autoMine: false, // Faster deployment on local networks
   });
 
   //const deployerSigner = await ethers.getSigner(deployer);
@@ -24,6 +24,12 @@ const deployCrushToken: DeployFunction = async function (hre: HardhatRuntimeEnvi
   // Get the deployed contract to interact with it after deploying
   //const crushToken = await ethers.getContractAt("CrushToken", crushTokenDeployment.address, deployerSigner);
   console.log("CrushToken deployed to:", crushTokenDeployment.address);
+
+  // Interact with the deployed contract
+  const crushToken = await ethers.getContractAt("CrushToken", crushTokenDeployment.address);
+  const tx = await crushToken.setPlayerScore(deployer, 100);
+  await tx.wait();
+  console.log("Player score set successfully");
 };
 
 export default deployCrushToken;

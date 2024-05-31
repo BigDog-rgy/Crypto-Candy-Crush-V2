@@ -9,15 +9,10 @@ import "solidity-coverage";
 import "@nomicfoundation/hardhat-verify";
 import "hardhat-deploy";
 import "hardhat-deploy-ethers";
+import "dotenv/config";
 
-// If not set, it uses ours Alchemy's default API key.
-// You can get your own at https://dashboard.alchemyapi.io
-const providerApiKey = process.env.ALCHEMY_API_KEY || "oKxs-03sij-U_N0iOlrSsZFr29-IqbuF";
-// If not set, it uses the hardhat account 0 private key.
-const deployerPrivateKey =
-  process.env.DEPLOYER_PRIVATE_KEY ?? "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
-// If not set, it uses ours Etherscan default API key.
-const etherscanApiKey = process.env.ETHERSCAN_API_KEY || "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW";
+const deployerPrivateKey = process.env.DEPLOYER_PRIVATE_KEY; // Use the deployer private key from .env file
+const etherscanApiKey = process.env.ETHERSCAN_API_KEY; // Use the Etherscan API key from .env file
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -34,7 +29,7 @@ const config: HardhatUserConfig = {
   namedAccounts: {
     deployer: {
       // By default, it will take the first Hardhat account as the deployer
-      default: 0,
+      default: "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
     },
   },
   networks: {
@@ -42,16 +37,27 @@ const config: HardhatUserConfig = {
     // If the network you are looking for is not here you can add new network settings
     localhost: {
       url: "http://127.0.0.1:8545",
+      accounts: [deployerPrivateKey] as string[],
     },
     hardhat: {
+      chainId: 1337,
       forking: {
-        url: `https://eth-mainnet.alchemyapi.io/v2/${providerApiKey}`,
+        url: `https://eth-mainnet.g.alchemy.com/v2/Sbo9pom5Oaut_IRXfc3XL8SCnCX6kSCc`,
         enabled: process.env.MAINNET_FORKING_ENABLED === "true",
       },
+      accounts: [{ privateKey: deployerPrivateKey!, balance: "1000000000000000000" }] as any,
     },
-    mainnet: {
+  },
+  etherscan: {
+    // Etherscan API key for contract verification
+    apiKey: etherscanApiKey,
+  },
+};
+
+export default config;
+/*mainnet: {
       url: `https://eth-mainnet.alchemyapi.io/v2/${providerApiKey}`,
-      accounts: [deployerPrivateKey],
+      accounts: [{privateKey: deployerPrivateKey!}],
     },
     sepolia: {
       url: `https://eth-sepolia.g.alchemy.com/v2/${providerApiKey}`,
@@ -136,5 +142,4 @@ const config: HardhatUserConfig = {
     enabled: false,
   },
 };
-
-export default config;
+*/
