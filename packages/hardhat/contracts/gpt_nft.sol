@@ -15,7 +15,7 @@ contract SimpleNFT is ERC721, Ownable, ReentrancyGuard {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIdCounter;
 
-    ISimpleToken public simpleToken;
+    ISimpleToken public simpleToken; 
 
     event Minted(address indexed minter, uint256 tokenId, uint256 amountBurned);
 
