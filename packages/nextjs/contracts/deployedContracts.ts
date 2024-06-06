@@ -6,14 +6,14 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 const deployedContracts = {
   31337: {
-    CNDY_NFT: {
-      address: "0x6431AF84d34F0522cAA58b221d94A150B5AdAC69",
+    SimpleNFT: {
+      address: "0x18b7CBdfFA52d1e7BB992fd50f394c5b59E20B72",
       abi: [
         {
           inputs: [
             {
               internalType: "address",
-              name: "_crushTokenAddress",
+              name: "_simpleToken",
               type: "address",
             },
           ],
@@ -74,32 +74,25 @@ const deployedContracts = {
           anonymous: false,
           inputs: [
             {
+              indexed: true,
+              internalType: "address",
+              name: "minter",
+              type: "address",
+            },
+            {
               indexed: false,
               internalType: "uint256",
-              name: "_fromTokenId",
+              name: "tokenId",
               type: "uint256",
             },
             {
               indexed: false,
               internalType: "uint256",
-              name: "_toTokenId",
+              name: "amountBurned",
               type: "uint256",
             },
           ],
-          name: "BatchMetadataUpdate",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: false,
-              internalType: "uint256",
-              name: "_tokenId",
-              type: "uint256",
-            },
-          ],
-          name: "MetadataUpdate",
+          name: "Minted",
           type: "event",
         },
         {
@@ -184,19 +177,6 @@ const deployedContracts = {
           type: "function",
         },
         {
-          inputs: [],
-          name: "crushToken",
-          outputs: [
-            {
-              internalType: "contract CrushToken",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
           inputs: [
             {
               internalType: "uint256",
@@ -210,6 +190,25 @@ const deployedContracts = {
               internalType: "address",
               name: "",
               type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "getRewardMultiplier",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
             },
           ],
           stateMutability: "view",
@@ -240,14 +239,8 @@ const deployedContracts = {
           type: "function",
         },
         {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "tokenId",
-              type: "uint256",
-            },
-          ],
-          name: "mintCNDY",
+          inputs: [],
+          name: "mintNFT",
           outputs: [],
           stateMutability: "nonpayable",
           type: "function",
@@ -374,21 +367,16 @@ const deployedContracts = {
           type: "function",
         },
         {
-          inputs: [
+          inputs: [],
+          name: "simpleToken",
+          outputs: [
             {
-              internalType: "uint256",
-              name: "tokenId",
-              type: "uint256",
-            },
-            {
-              internalType: "string",
-              name: "cid",
-              type: "string",
+              internalType: "contract ISimpleToken",
+              name: "",
+              type: "address",
             },
           ],
-          name: "setBaseURI",
-          outputs: [],
-          stateMutability: "nonpayable",
+          stateMutability: "view",
           type: "function",
         },
         {
@@ -418,19 +406,6 @@ const deployedContracts = {
               internalType: "string",
               name: "",
               type: "string",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "tokenCounter",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
             },
           ],
           stateMutability: "view",
@@ -492,42 +467,15 @@ const deployedContracts = {
           type: "function",
         },
       ],
-      inheritedFunctions: {
-        approve: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        balanceOf: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        getApproved: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        isApprovedForAll: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        name: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        ownerOf: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        safeTransferFrom: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        setApprovalForAll: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        supportsInterface: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        symbol: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        tokenURI: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        transferFrom: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        owner: "@openzeppelin/contracts/access/Ownable.sol",
-        renounceOwnership: "@openzeppelin/contracts/access/Ownable.sol",
-        transferOwnership: "@openzeppelin/contracts/access/Ownable.sol",
-      },
+      inheritedFunctions: {},
     },
-    CrushToken: {
-      address: "0xeA8AE08513f8230cAA8d031D28cB4Ac8CE720c68",
+    SimpleToken: {
+      address: "0x6431AF84d34F0522cAA58b221d94A150B5AdAC69",
       abi: [
         {
           inputs: [],
           stateMutability: "nonpayable",
           type: "constructor",
-        },
-        {
-          inputs: [
-            {
-              internalType: "string",
-              name: "reason",
-              type: "string",
-            },
-          ],
-          name: "TransferNotAllowed",
-          type: "error",
         },
         {
           anonymous: false,
@@ -668,64 +616,19 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
-          ],
-          name: "burn",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
-          ],
-          name: "burnForCNDY",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "score",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "multiplier",
-              type: "uint256",
-            },
-          ],
-          name: "calculateCRUSHReward",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "cndyContractAddress",
-          outputs: [
-            {
               internalType: "address",
-              name: "",
+              name: "account",
               type: "address",
             },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
           ],
-          stateMutability: "view",
+          name: "burnForNFT",
+          outputs: [],
+          stateMutability: "nonpayable",
           type: "function",
         },
         {
@@ -769,38 +672,6 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "address",
-              name: "player",
-              type: "address",
-            },
-          ],
-          name: "getPlayerScore",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getTotalSupply",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
               name: "spender",
               type: "address",
             },
@@ -822,19 +693,8 @@ const deployedContracts = {
           type: "function",
         },
         {
-          inputs: [
-            {
-              internalType: "address",
-              name: "to",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
-          ],
-          name: "mint",
+          inputs: [],
+          name: "mintToken",
           outputs: [],
           stateMutability: "nonpayable",
           type: "function",
@@ -875,12 +735,38 @@ const deployedContracts = {
         {
           inputs: [
             {
+              internalType: "address",
+              name: "_simpleNFT",
+              type: "address",
+            },
+          ],
+          name: "setNFTContract",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "simpleNFT",
+          outputs: [
+            {
+              internalType: "contract ISimpleNFT",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
               internalType: "uint256",
               name: "score",
               type: "uint256",
             },
           ],
-          name: "setPlayerScore",
+          name: "submitScore",
           outputs: [],
           stateMutability: "nonpayable",
           type: "function",
@@ -915,12 +801,12 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "address",
-              name: "",
+              name: "to",
               type: "address",
             },
             {
               internalType: "uint256",
-              name: "",
+              name: "amount",
               type: "uint256",
             },
           ],
@@ -939,17 +825,17 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "address",
-              name: "",
+              name: "from",
               type: "address",
             },
             {
               internalType: "address",
-              name: "",
+              name: "to",
               type: "address",
             },
             {
               internalType: "uint256",
-              name: "",
+              name: "amount",
               type: "uint256",
             },
           ],
@@ -977,64 +863,6 @@ const deployedContracts = {
           stateMutability: "nonpayable",
           type: "function",
         },
-      ],
-      inheritedFunctions: {
-        allowance: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        approve: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        balanceOf: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        decimals: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        decreaseAllowance: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        increaseAllowance: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        name: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        symbol: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        totalSupply: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        transfer: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        transferFrom: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        owner: "@openzeppelin/contracts/access/Ownable.sol",
-        renounceOwnership: "@openzeppelin/contracts/access/Ownable.sol",
-        transferOwnership: "@openzeppelin/contracts/access/Ownable.sol",
-      },
-    },
-    Raffle: {
-      address: "0x18b7CBdfFA52d1e7BB992fd50f394c5b59E20B72",
-      abi: [
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "crushContractAddress",
-              type: "address",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "constructor",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "previousOwner",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "newOwner",
-              type: "address",
-            },
-          ],
-          name: "OwnershipTransferred",
-          type: "event",
-        },
-        {
-          inputs: [],
-          name: "enterRaffle",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
         {
           inputs: [
             {
@@ -1043,7 +871,7 @@ const deployedContracts = {
               type: "address",
             },
           ],
-          name: "leaderboard",
+          name: "userScores",
           outputs: [
             {
               internalType: "uint256",
@@ -1052,119 +880,10 @@ const deployedContracts = {
             },
           ],
           stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "owner",
-          outputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "raffleDuration",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "raffleEndTime",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "renounceOwnership",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "rewardTier1",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "rewardTier2",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "rewardTier3",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "startNewRaffle",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "newOwner",
-              type: "address",
-            },
-          ],
-          name: "transferOwnership",
-          outputs: [],
-          stateMutability: "nonpayable",
           type: "function",
         },
       ],
-      inheritedFunctions: {
-        owner: "@openzeppelin/contracts/access/Ownable.sol",
-        renounceOwnership: "@openzeppelin/contracts/access/Ownable.sol",
-        transferOwnership: "@openzeppelin/contracts/access/Ownable.sol",
-      },
+      inheritedFunctions: {},
     },
   },
 } as const;

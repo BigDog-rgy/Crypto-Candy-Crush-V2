@@ -1,3 +1,4 @@
+/*
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
@@ -57,12 +58,6 @@ contract CrushToken is ERC20, Ownable {
         _totalSupply -= amount;
     }
 
-    /* options: 
-        1) trust players to directly give their scores (bad)
-        2) off-chain signature verification -> game server calcs score, signs with priv key, then contract verifies signature with pub key
-        3) commit-reveal scheme -> players commit hash of score along and a secret, then reveal the acutal score and the secret (how do we know the score is real tho?)
-        4) oracle-based reporting -> request score verification upon user-submitted gameplay score
-    */
    function setPlayerScore(uint256 score) public {
     _playerScores[msg.sender] = score;
    }
@@ -84,3 +79,5 @@ contract CrushToken is ERC20, Ownable {
         return _totalSupply;
     }
 }
+
+*/

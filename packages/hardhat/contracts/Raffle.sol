@@ -1,30 +1,10 @@
+/*
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
 import "./CrushToken.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-/*
-Setting Raffle Duration
-    Managing the time intervals at which raffles occur.
-Maintaining a Leaderboard
-    Keeping track of player scores and possibly other metrics like:
-        Frequency of play
-        Historical performance
-Selecting a Winner
-    Implementing the logic to choose a winner based on:
-        The leaderboard
-        Random selection tempered by player scores
-Handling Payouts
-    Distributing prizes, which could be in:
-        CRUSH
-        Other tokens
-        Special in-game assets
-
-Contract interactions: 
-    Calls CRUSH to mint tokens based on submitted game scores
-    Listens
-*/
 
 contract Raffle is Ownable{
     CrushToken private _crushContract;
