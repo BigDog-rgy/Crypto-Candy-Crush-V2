@@ -21,10 +21,12 @@ const deployContracts: DeployFunction = async function (hre: HardhatRuntimeEnvir
 
   const simpleTokenAddress = simpleTokenDeployment.address;
 
+  const tokenURIs = ["ipfs://QmYs1boGizK6BnSj2AVALZiyDCy1RP8YJrdhPDYjRGWkDN"];
+
   // Deploy SimpleNFT with the SimpleToken address as an argument
   const simpleNFTDeployment = await deploy("SimpleNFT", {
     from: deployer,
-    args: [simpleTokenAddress],
+    args: [simpleTokenAddress, tokenURIs],
     log: true,
     autoMine: true,
   });

@@ -16,6 +16,11 @@ const deployedContracts = {
               name: "_simpleToken",
               type: "address",
             },
+            {
+              internalType: "string[]",
+              name: "tokenURIs",
+              type: "string[]",
+            },
           ],
           stateMutability: "nonpayable",
           type: "constructor",
@@ -198,9 +203,9 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "address",
-              name: "account",
-              type: "address",
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
             },
           ],
           name: "getRewardMultiplier",

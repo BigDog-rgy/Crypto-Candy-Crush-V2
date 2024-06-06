@@ -30,13 +30,13 @@
     "@types/mocha": "^9.1.1",
     "@types/prettier": "^2",
     "@types/qrcode": "^1",
+    "@types/xmlhttprequest": "^1",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
     "chai": "^4.3.6",
     "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "ethers": "^6.10.0",
     "hardhat": "^2.22.4",
     "hardhat-deploy": "^0.11.45",
     "hardhat-deploy-ethers": "^0.4.1",
@@ -52,6 +52,9 @@
     "@typechain/ethers-v6": "^0.5.1",
     "dotenv": "^16.0.3",
     "envfile": "^6.18.0",
-    "qrcode": "^1.5.1"
+    "ethers": "5.7.2",
+    "qrcode": "^1.5.1",
+    "xmlhttprequest": "^1.8.0",
+    "zksync-web3": "latest"
   }
 }
